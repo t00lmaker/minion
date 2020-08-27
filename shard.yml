@@ -1,0 +1,17 @@
+name: hello-web
+version: 0.1.0
+
+authors:
+  - your-name-here <your-email-here>
+
+targets:
+  hello-web:
+    main: src/hello-web.cr
+
+crystal: 0.35.1
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+license: MIT
