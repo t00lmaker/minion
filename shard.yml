@@ -13,5 +13,11 @@ crystal: 0.35.1
 dependencies:
   kemal:
     github: kemalcr/kemal
+    branch: master
+
+development_dependencies:
+  coverage:
+    github: anykeyh/crystal-coverage
+
 
 license: MIT
