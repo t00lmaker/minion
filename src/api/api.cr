@@ -4,5 +4,5 @@ get "/" do
   "Hello World!"
 end
 
-Kemal.run
 
+Kemal.run
