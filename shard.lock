@@ -1,12 +1,16 @@
 version: 2.0
 shards:
+  coverage:
+    git: https://github.com/anykeyh/crystal-coverage.git
+    version: 0.1.0+git.commit.e781f8c70812c9dc4d5bf1d1e396e1f5c9ef1051
+
   exception_page:
     git: https://github.com/crystal-loot/exception_page.git
     version: 0.1.4
 
   kemal:
     git: https://github.com/kemalcr/kemal.git
-    version: 0.26.1
+    version: 0.26.1+git.commit.a819d4792bbc63d993d6dd2b15f9af5efb0c2d8c
 
   kilt:
     git: https://github.com/jeromegn/kilt.git

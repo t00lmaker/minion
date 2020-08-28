@@ -1,16 +1,16 @@
-
-class Command
+abstract class Command
+  
+  def initilize(context : Context)
+    @context = context
+  end
   
   def apply?
     true
   end
 
   def run
-    puts "execute"
+    execute() if apply?
   end
 
-  def execute (context : Context)
-  
-  end
-
+  abstract def execute()
 end
