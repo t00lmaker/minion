@@ -22,6 +22,11 @@ TODO: Write development instructions here
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
+## Format code 
+```
+ crystal tool format
+```
+
 ## Contributors
 
 - [your-name-here](https://github.com/your-github-user) - creator and maintainer
