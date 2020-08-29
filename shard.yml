@@ -1,12 +1,12 @@
-name: hello-web
+name: minion
 version: 0.1.0
 
 authors:
-  - your-name-here <your-email-here>
+  - Luan <luanpontes2@gmail.com>
 
 targets:
-  hello-web:
-    main: src/hello-web.cr
+  minion:
+    main: src/minion.cr
 
 crystal: 0.35.1
 
