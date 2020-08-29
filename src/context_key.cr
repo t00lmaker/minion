@@ -18,6 +18,10 @@ enum ContextKey
       Id =>  :id
     }[key]
   end
+  
+  def env
+    env(self)
+  end
 
   def env(key : ContextKey)
     {

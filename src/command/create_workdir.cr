@@ -1,4 +1,4 @@
 class CreateWorkdir < Command
-  def execute
+  def execute(context : Context)
   end
 end

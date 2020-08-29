@@ -1,16 +1,14 @@
 abstract class Command
-  
-  def initilize(context : Context)
-    @context = context
-  end
-  
+  property context
+
   def apply?
     true
   end
 
-  def run
-    execute() if apply?
+  def run(context : Context)
+    @context = context
+    execute(context) if apply?
   end
 
-  abstract def execute()
+  abstract def execute(context : Context)
 end
