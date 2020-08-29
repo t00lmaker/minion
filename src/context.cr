@@ -1,21 +1,21 @@
 class Context
-  property map
+  property keys
 
-  def initialize(@map = {} of Symbol => String);end
+  def initialize(@keys = {} of Symbol => String);end
 
   def []=(key : Symbol, value : String)
-    @map[key] = value
+    @keys[key] = value
   end
 
   def [](key : Symbol)
-    @map[key]
+    @keys[key]
   end
 
   def []=(key : ContextKey, value : String)
-    @map[key.symb] = value
+    @keys[key.symb] = value
   end
 
   def [](key : ContextKey)
-    @map[key.symb]
+    @keys[key.symb]
   end
 end

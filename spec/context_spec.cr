@@ -1,5 +1,4 @@
 require "./spec_helper"
-require "../src/context"
 
 describe Context do
 
@@ -10,8 +9,8 @@ describe Context do
     end
     it "empty ..." do
       context = Context.new
-      context.map.should_not be_nil 
-      context.map.should be_empty
+      context.keys.should_not be_nil 
+      context.keys.should be_empty
     end
   end
 

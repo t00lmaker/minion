@@ -1,17 +1,28 @@
 enum ContextKey
+  Rootdir #root
   Workdir # :workdir
+  Config # :config
   Group # :group
   Id # :id
 
   def symb
-    map(self)
+    keys(self)
   end
 
-  def map(key : ContextKey)
+  def keys(key : ContextKey)
     {
+      Rootdir => :rootdir,
       Workdir => :wordir,
+      Config => :config,
       Group => :group, 
       Id =>  :id
+    }[key]
+  end
+
+  def env(key : ContextKey)
+    {
+      Rootdir => "MINION_ROOT_DIR",
+      Config => "MINION_CONFIG_FILE",
     }[key]
   end
 end
