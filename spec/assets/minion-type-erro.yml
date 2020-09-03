@@ -1,0 +1,19 @@
+---
+name: minion1
+desc: Um minion para fazer isso e isso.
+works:
+  - 
+    command:  /home/usr/context/script.sh
+    params:
+      - 
+        name: PATH 
+        desc: "Local de bb oocc mdd"
+        type: string
+      - 
+        name: SOURCE 
+        desc: "Local de gg hh kk"
+        type: string
+      - 
+        name: MMDE 
+        desc: "Local de gg hh kk"
+        type: Stdsfasdfasdfag
