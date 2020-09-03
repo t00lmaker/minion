@@ -1,47 +1,54 @@
 require "yaml"
+require "json"
+require "./context_key"
 
 module Config
 
-  def load(path : String)
+  @@config : Minion | Nil
+
+  def self.instance
+    path_config = ENV[ContextKey::Config.env]
+    path_config ||= "~/minion.yml"
+    @@config ||= load(path_config)
+  end
+
+  def load(path : String) : Minion
     yaml = File.open(path)
     Minion.from_yaml(yaml)
   end
 
   class Minion
+    include JSON::Serializable
     include YAML::Serializable
 
-    @[YAML::Field(key: "name")]
     property name : String
 
-    @[YAML::Field(key: "desc")]
     property desc : String?
 
-    @[YAML::Field(key: "works")]
     property works : Array(Work)
 
   end
 
   class Work
+    include JSON::Serializable
     include YAML::Serializable
 
-    @[YAML::Field(key: "command")]
     property command : String
 
-    @[YAML::Field(key: "params")]
     property params : Array(Param)
 
   end
 
   class Param
+    include JSON::Serializable
     include YAML::Serializable
 
-    @[YAML::Field(key: "name")]
     property name : String
 
-    @[YAML::Field(key: "desc")]
     property desc : String? 
 
     @[YAML::Field(key: "type")]
+    @[JSON::Field(key: "type")]
     property typeParam : ParamType
 
   end
