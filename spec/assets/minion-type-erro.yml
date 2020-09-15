@@ -8,11 +8,11 @@ works:
       - 
         name: PATH 
         desc: "Local de bb oocc mdd"
-        type: string
+        type: text
       - 
         name: SOURCE 
         desc: "Local de gg hh kk"
-        type: string
+        type: text
       - 
         name: MMDE 
         desc: "Local de gg hh kk"
