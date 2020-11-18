@@ -17,20 +17,18 @@ get "/info" do |env|
   config.to_json
 end
 
-post "/run/:work" do |env|
+post "/run" do |env|
   env.response.content_type = "application/json"
-  
-  work = env.params.url["work"]
-  
-  work = Config.work_by_name(work).first
+   
   begin
     request = RequestRunner.from_json(env.request.body.not_nil!)
-    result = request.run(work)
+    result = request.run()
   rescue ex
+    puts ex.inspect_with_backtrace
     halt env, status_code: 400, response: ex.message
   end
 
-  {:result => result}.to_json
+  {:result => "ok"}.to_json
 end
 
 Kemal.run

@@ -4,18 +4,18 @@ desc: Um minion para fazer isso e isso.
 works:
   - 
     name: test
-    command:  /home/usr/context/script.sh
+    command: /home/luan/Workspace/crystal/minion/spec/assets/script.sh
     params:
       - 
         name: PATH 
         desc: "Local de bb oocc mdd"
-        type: text
+        type: Text
       - 
         name: SOURCE 
         desc: "Local de gg hh kk"
-        type: text
+        type: Number
       - 
         name: MMDE 
         desc: "Local de gg hh kk"
-        type: text
+        type: Text
         required: false
