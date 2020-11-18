@@ -1,5 +1,7 @@
 enum ContextKey
-  Rootdir #root
+ 
+  ExecutionKey # :execution_key
+  Workspace # :root
   Workdir # :workdir
   Config # :config
   Group # :group
@@ -11,7 +13,8 @@ enum ContextKey
 
   def keys(key : ContextKey)
     {
-      Rootdir => :rootdir,
+      ExecutionKey => :execution_key,
+      Workspace => :rootdir,
       Workdir => :wordir,
       Config => :config,
       Group => :group, 
@@ -25,8 +28,7 @@ enum ContextKey
 
   def env(key : ContextKey)
     {
-      Rootdir => "MINION_ROOT_DIR",
-      Config => "MINION_CONFIG_FILE",
+      Config => "MINION_CONFIG_FILE"
     }[key]
   end
 end

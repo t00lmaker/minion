@@ -1,5 +1,5 @@
 require "kemal"
-require "./request_runner"
+require "../request_runner"
 require "../config"
 
 include Config

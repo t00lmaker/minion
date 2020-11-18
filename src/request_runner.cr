@@ -1,4 +1,6 @@
-require "../config"
+require "./config"
+require "./context"
+require "./context_key"
 require "file_utils"
 require "uuid"
 
@@ -11,6 +13,9 @@ class RequestRunner
   property workName : String
   
   property params : Hash(String, String)
+
+  @[JSON::Field(ignore: true)]
+  property context = Context.new 
 
   def run
     work = Config.work_by_name(workName).first
@@ -29,18 +34,24 @@ class RequestRunner
   end
 
   def create_workerdir(work : Work)
-    workspace = Config.instance.workspace
+    workdir = Config.instance.workspace
     execution_key = UUID.random.to_s
-    workdir = "#{workspace}#{id}#{execution_key}"
-    workdir = Path.new(workspace, id, execution_key)
-    FileUtils.mkdir_p(workdir.to_s)
+    workspace = Path.new(workdir, id, execution_key).to_s
+    
+    FileUtils.mkdir_p(workspace)
+
+    context[ContextKey::ExecutionKey] = execution_key
+    context[ContextKey::Workspace] = workspace
+    context[ContextKey::Workdir] = workdir
   end
   
   def run_command(work : Work)
+    log_file = "#{context[ContextKey::Workspace]}/#{@workName}.log"
+    puts log_file
     Process.run(
       command: work.command,
       env: @params,  
-      output: File.new("/home/luan/#{@workName}.log", "w")
+      output: File.new(log_file, "w")
     )
   end
 end
