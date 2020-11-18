@@ -1,6 +1,7 @@
 ---
 name: minion1
 desc: Um minion para fazer isso e isso.
+workspace: /home/luan/Workspace/crystal/minion/workspace
 works:
   - 
     name: test

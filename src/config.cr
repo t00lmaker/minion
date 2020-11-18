@@ -4,7 +4,7 @@ require "./context_key"
 
 module Config
 
-  @@config : Minion | Nil
+  @@config : Minion?
 
   def self.instance
     path_config = ENV[ContextKey::Config.env]
@@ -28,6 +28,8 @@ module Config
     property name : String
 
     property desc : String?
+
+    property workspace : String
 
     property group : String?
 

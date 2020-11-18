@@ -1,4 +1,6 @@
 require "../config"
+require "file_utils"
+require "uuid"
 
 class RequestRunner 
   include JSON::Serializable
@@ -27,7 +29,11 @@ class RequestRunner
   end
 
   def create_workerdir(work : Work)
-
+    workspace = Config.instance.workspace
+    execution_key = UUID.random.to_s
+    workdir = "#{workspace}#{id}#{execution_key}"
+    workdir = Path.new(workspace, id, execution_key)
+    FileUtils.mkdir_p(workdir.to_s)
   end
   
   def run_command(work : Work)
