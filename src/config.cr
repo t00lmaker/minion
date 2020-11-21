@@ -17,7 +17,7 @@ module Config
   end
 
   def self.work_by_name(name : String)
-    self.instance.works.select{ |w| w.name == name }.first
+    self.instance.works.find{ |w| w.name == name }
   end
 
   class Minion
@@ -54,11 +54,11 @@ module Config
 
     property name : String
 
-    property desc : String? 
+    property desc : String?
 
     @[YAML::Field(key: "type")]
     @[JSON::Field(key: "type")]
-    property typeParam : ParamType
+    property type_param : ParamType
 
     property required = true
   end

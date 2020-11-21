@@ -1,5 +1,5 @@
 module Enums
-  
+
   enum ContextKey
     ExecutionKey # :execution_key
     Workspace # :root
@@ -20,11 +20,11 @@ module Enums
         Workdir => :wordir,
         Result => :result,
         Config => :config,
-        Group => :group, 
+        Group => :group,
         Id =>  :id
       }[key]
     end
-    
+
     def env
       env(self)
     end
@@ -53,6 +53,6 @@ module Enums
         InternalError => "interno_error",
         Success => "success"
       }[key]
-    end 
-  end  
+    end
+  end
 end

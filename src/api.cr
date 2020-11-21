@@ -21,7 +21,7 @@ end
 
 post "/run" do |env|
   env.response.content_type = "application/json"
-   
+
   begin
     request = RequestRunner.from_json(env.request.body.not_nil!)
     result = request.run()
@@ -33,4 +33,8 @@ post "/run" do |env|
   result.to_json
 end
 
-Kemal.run
+ENV["KEMAL_ENV"] = ENV["KEMAL_ENV"]? || "development"
+
+unless ENV["KEMAL_ENV"] == "test"
+  Kemal.run
+end

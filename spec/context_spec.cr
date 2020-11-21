@@ -9,7 +9,7 @@ describe Context do
     end
     it "empty ..." do
       context = Context.new
-      context.keys.should_not be_nil 
+      context.keys.should_not be_nil
       context.keys.should be_empty
     end
   end
@@ -23,7 +23,7 @@ describe Context do
     end
 
     it "key override" do
-      context = Context.new 
+      context = Context.new
       context[:key] = "value"
       context[:key].should_not be_nil
       context[:key].should eq("value")
@@ -32,7 +32,7 @@ describe Context do
       context[:key].should eq("value2")
     end
 
-    it "use key context enum" do 
+    it "use key context enum" do
       context = Context.new
       context[ContextKey::Id] = "id"
       context[ContextKey::Id].should_not be_nil

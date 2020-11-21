@@ -23,7 +23,7 @@ class Context
 
   def to_json(builder : JSON::Builder)
     builder.object do
-      @keys.each { |k, v| builder.field k, v } 
-    end 
+      @keys.each { |k, v| builder.field k, v }
+    end
   end
 end

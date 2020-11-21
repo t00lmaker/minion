@@ -2,30 +2,29 @@ require "./context"
 require "file_utils"
 require "uuid"
 
-class RequestRunner 
+class RequestRunner
   include JSON::Serializable
-  
+
   property id : String
 
   @[JSON::Field(key: "work")]
-  property workName : String
-  
+  property work_name : String
+
   property params : Hash(String, String)
 
   @[JSON::Field(ignore: true)]
   property context = Context.new
 
   def run() : Context
-    work = Config.work_by_name(workName)
+    work = Config.work_by_name(work_name)
     if work
       validate(work)
       create_workerdir(work)
       run_command(work)
     else
-      raise "Woker #{workName} not found."
+      raise "Woker #{work_name} not found."
     end
-
-    return context
+    context
   end
 
   def validate(work : Work) : Nil
@@ -34,7 +33,7 @@ class RequestRunner
         if p.required
           context[ContextKey::Result] = ResultKey::InvalidParams.str
         end
-      end   
+      end
     end
   end
 
@@ -42,7 +41,7 @@ class RequestRunner
     workdir = Config.instance.workspace
     execution_key = UUID.random.to_s
     workspace = Path.new(workdir, id, execution_key).to_s
-    
+
     FileUtils.mkdir_p(workspace)
 
     context[ContextKey::Id] = id
@@ -50,14 +49,16 @@ class RequestRunner
     context[ContextKey::Workspace] = workspace
     context[ContextKey::Workdir] = workdir
   end
-  
+
   def run_command(work : Work) : Nil
-    log_file = "#{context[ContextKey::Workspace]}/#{@workName}.log"
+    log_file = "#{context[ContextKey::Workspace]}/#{@work_name}.log"
+    stdout = IO::Memory.new
     status = Process.run(
       command: work.command,
-      env: @params,  
-      output: File.new(log_file, "w")
+      env: @params,
+      output: stdout
     )
+     File.new(log_file, "w")
      success = status.normal_exit?
      result = success ? ResultKey::Success : ResultKey::ExecutionError
      context[ContextKey::Result] = result.str
