@@ -1,8 +1,10 @@
 require "kemal"
-require "../request_runner"
-require "../config"
+require "./request_runner"
+require "./config"
+require "./enums"
 
 include Config
+include Enums
 
 config = Config.instance
 

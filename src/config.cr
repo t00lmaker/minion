@@ -1,6 +1,5 @@
 require "yaml"
 require "json"
-require "./context_key"
 
 module Config
 
