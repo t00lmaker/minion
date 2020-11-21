@@ -3,6 +3,7 @@ enum ContextKey
   ExecutionKey # :execution_key
   Workspace # :root
   Workdir # :workdir
+  Result # :result
   Config # :config
   Group # :group
   Id # :id
@@ -16,6 +17,7 @@ enum ContextKey
       ExecutionKey => :execution_key,
       Workspace => :rootdir,
       Workdir => :wordir,
+      Result => :result,
       Config => :config,
       Group => :group, 
       Id =>  :id

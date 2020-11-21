@@ -28,7 +28,7 @@ post "/run" do |env|
     halt env, status_code: 400, response: ex.message
   end
 
-  {:result => "ok"}.to_json
+  result.to_json
 end
 
 Kemal.run

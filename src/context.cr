@@ -1,3 +1,5 @@
+require "json"
+
 class Context
   property keys
 
@@ -17,5 +19,11 @@ class Context
 
   def [](key : ContextKey)
     @keys[key.symb]
+  end
+
+  def to_json(builder : JSON::Builder)
+    builder.object do
+      @keys.each { |k, v| builder.field k, v } 
+    end 
   end
 end

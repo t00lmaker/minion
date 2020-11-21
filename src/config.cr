@@ -18,7 +18,7 @@ module Config
   end
 
   def self.work_by_name(name : String)
-    self.instance.works.select{ |w| w.name == name }
+    self.instance.works.select{ |w| w.name == name }.first
   end
 
   class Minion
