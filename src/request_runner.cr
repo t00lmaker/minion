@@ -1,34 +1,42 @@
-require "./context"
 require "file_utils"
 require "uuid"
+
+require "./context"
+require "./task_runner"
+
+class WorkConverter 
+
+  def from_json(pull : JSON::PullParser)
+    Config.work_by_name(pull.read_string)
+  end
+
+  def to_json(work : Work, builder : JSON::Builder)
+    builder.string(value.name)
+  end
+end
 
 class RequestRunner
   include JSON::Serializable
 
   property id : String
 
-  @[JSON::Field(key: "work")]
-  property work_name : String
-
   property params : Hash(String, String)
 
   @[JSON::Field(ignore: true)]
   property context = Context.new
 
+  @[JSON::Field(converter: WorkConverter.new)]
+  property work : Work
+
   def run() : Context
-    work = Config.work_by_name(work_name)
-    if work
-      validate(work)
-      create_workerdir(work)
-      run_command(work)
-    else
-      raise "Woker #{work_name} not found."
-    end
+    validate
+    create_workerdir
+    run_command
     context
   end
 
-  def validate(work : Work) : Nil
-    work.params.each do |p|
+  def validate() : Nil
+    @work.try &.params.each do |p|
       unless(@params.has_key?(p.name))
         if p.required
           context[ContextKey::Result] = ResultKey::InvalidParams.str
@@ -37,7 +45,7 @@ class RequestRunner
     end
   end
 
-  def create_workerdir(work : Work) : Nil
+  def create_workerdir() : Nil
     workdir = Config.instance.workspace
     execution_key = UUID.random.to_s
     workspace = Path.new(workdir, id, execution_key).to_s
@@ -50,17 +58,14 @@ class RequestRunner
     context[ContextKey::Workdir] = workdir
   end
 
-  def run_command(work : Work) : Nil
-    log_file = "#{context[ContextKey::Workspace]}/#{@work_name}.log"
-    stdout = IO::Memory.new
-    status = Process.run(
-      command: work.command,
-      env: @params,
-      output: stdout
-    )
-     File.new(log_file, "w")
-     success = status.normal_exit?
-     result = success ? ResultKey::Success : ResultKey::ExecutionError
-     context[ContextKey::Result] = result.str
+  def run_command() : Nil
+    spawn do
+      TaskRunner
+          .new(self)
+          .run
+          .outputs
+          .save_log
+          .notify
+    end 
   end
 end

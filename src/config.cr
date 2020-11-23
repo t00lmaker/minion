@@ -16,8 +16,10 @@ module Config
     Minion.from_yaml(yaml)
   end
 
-  def self.work_by_name(name : String)
-    self.instance.works.find{ |w| w.name == name }
+  def self.work_by_name(name : String) : Work
+    work = self.instance.works.find{ |w| w.name == name }
+    raise "Woker #{name} not found." unless work 
+    work
   end
 
   class Minion
