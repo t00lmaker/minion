@@ -18,7 +18,7 @@ module Config
 
   def self.work_by_name(name : String) : Work
     work = self.instance.works.find{ |w| w.name == name }
-    raise "Woker #{name} not found." unless work 
+    raise "Woker #{name} not found." unless work
     work
   end
 

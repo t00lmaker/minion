@@ -1,5 +1,4 @@
 module Enums
-  
   enum ContextKey
     ExecutionKey # :execution_key
     Workspace # :root

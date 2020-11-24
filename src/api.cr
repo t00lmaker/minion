@@ -1,5 +1,5 @@
 require "kemal"
-require "./request_runner"
+require "./order"
 require "./config"
 require "./enums"
 
@@ -23,7 +23,7 @@ post "/run" do |env|
   env.response.content_type = "application/json"
 
   begin
-    request = RequestRunner.from_json(env.request.body.not_nil!)
+    request = Order.from_json(env.request.body.not_nil!)
     result = request.run()
   rescue ex
     puts ex.inspect_with_backtrace

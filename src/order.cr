@@ -2,9 +2,9 @@ require "file_utils"
 require "uuid"
 
 require "./context"
-require "./task_runner"
+require "./job"
 
-class WorkConverter 
+class WorkConverter
 
   def from_json(pull : JSON::PullParser)
     Config.work_by_name(pull.read_string)
@@ -15,7 +15,7 @@ class WorkConverter
   end
 end
 
-class RequestRunner
+class Order
   include JSON::Serializable
 
   property id : String
@@ -29,13 +29,13 @@ class RequestRunner
   property work : Work
 
   def run() : Context
-    validate
+    validate_params
     create_workerdir
-    run_command
+    execute_order
     context
   end
 
-  def validate() : Nil
+  def validate_params() : Nil
     @work.try &.params.each do |p|
       unless(@params.has_key?(p.name))
         if p.required
@@ -58,14 +58,14 @@ class RequestRunner
     context[ContextKey::Workdir] = workdir
   end
 
-  def run_command() : Nil
+  def execute_order() : Nil
     spawn do
-      TaskRunner
+        Job
           .new(self)
-          .run
-          .outputs
-          .save_log
+          .execute
+          .save
+          .respond
           .notify
-    end 
+    end
   end
 end
