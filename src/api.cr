@@ -1,7 +1,10 @@
 require "kemal"
-require "./order"
+require "log"
+require "./models"
 require "./config"
 require "./enums"
+require "./context"
+require "./job"
 
 include Config
 include Enums
@@ -23,14 +26,27 @@ post "/run" do |env|
   env.response.content_type = "application/json"
 
   begin
-    request = Order.from_json(env.request.body.not_nil!)
-    result = request.run()
+    context = Context.new 
+    order = Order.from_json(env.request.body.not_nil!)
+    
+    spawn do
+      Job
+        .new(order, context)
+        .validate_params
+        .create_workerdir
+        .execute
+        .save
+        .outputs
+        .notify
+    end
+    order.to_json
+
   rescue ex
     puts ex.inspect_with_backtrace
     halt env, status_code: 400, response: ex.message
   end
 
-  result.to_json
+  #result.to_json
 end
 
 ENV["KEMAL_ENV"] = ENV["KEMAL_ENV"]? || "development"

@@ -20,3 +20,20 @@ works:
         desc: "Local de gg hh kk"
         type: Text
         required: false
+  - 
+    name: test2
+    command: /home/luan/Workspace/crystal/minion/spec/assets/script.sh
+    params:
+      - 
+        name: PATH 
+        desc: "Local de bb oocc mdd"
+        type: Text
+      - 
+        name: SOURCE 
+        desc: "Local de gg hh kk"
+        type: Number
+      - 
+        name: MMDE 
+        desc: "Local de gg hh kk"
+        type: Text
+        required: false
