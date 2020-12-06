@@ -1,11 +1,10 @@
-#!/bin/bash
-
-for i in {1..5}
-do
+#!/bin/sh
+CONTADOR=0
+while [  $CONTADOR -lt 5 ]; do
   echo $PATH
   echo $SOURCE
   echo $MMDE
-  /usr/bin/sleep 1s
-
-  echo  "!#OUTPUT $i=$i"   
+  sleep 3s
+  echo  "!#OUTPUT $CONTADOR=$CONTADOR" 
+  let CONTADOR=CONTADOR+1;   
 done

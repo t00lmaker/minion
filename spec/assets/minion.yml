@@ -1,11 +1,20 @@
 ---
 name: minion1
 desc: Um minion para fazer isso e isso.
-workspace: /home/luan/Workspace/crystal/minion/workspace
+scripts: /app/scripts
+workdir: /app/workdir
 works:
   - 
+    name: clone
+    command: ./clone.sh
+    params:
+      - 
+        name: GIT_REPO 
+        desc: "Repositório git como código do projeto."
+        type: Text
+  - 
     name: test
-    command: /home/luan/Workspace/crystal/minion/spec/assets/script.sh
+    command: ./script.sh
     params:
       - 
         name: PATH 
@@ -21,8 +30,8 @@ works:
         type: Text
         required: false
   - 
-    name: test2
-    command: /home/luan/Workspace/crystal/minion/spec/assets/script.sh
+    name: build
+    command: ./script.sh
     params:
       - 
         name: PATH 

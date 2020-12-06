@@ -28,9 +28,11 @@ module Config
 
     property name : String
 
+    property scripts : String
+
     property desc : String?
 
-    property workspace : String
+    property workdir : String
 
     property group : String?
 

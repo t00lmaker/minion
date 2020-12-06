@@ -29,11 +29,13 @@ class Job
 
     Log.info{ "Create workspace" }
 
-    workdir = Config.instance.workspace
+    workdir = Config.instance.workdir
+    scripts = "#{Config.instance.scripts}/"
     execution_key = UUID.random.to_s
     workspace = Path.new(workdir, @order.id, execution_key).to_s
 
     FileUtils.mkdir_p(workspace)
+    FileUtils.cp_r(scripts, workspace)
 
     Log.info{ workspace }
 
@@ -41,7 +43,8 @@ class Job
     @context[ContextKey::ExecutionKey] = execution_key
     @context[ContextKey::Workspace] = workspace
     @context[ContextKey::Workdir] = workdir
-
+   
+    
     self
   end
 
@@ -51,7 +54,8 @@ class Job
       status = Process.run(
         command: cmd,
         env: @order.params,
-        output: @stdout
+        output: @stdout,
+        chdir: @context[ContextKey::Workspace]
       )
       Log.info{ "Execution log: \n#{@stdout.to_s}" } 
       result = status.normal_exit? ? ResultKey::Success : ResultKey::ExecutionError
